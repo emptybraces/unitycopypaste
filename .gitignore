@@ -42,7 +42,7 @@ build*/
 /Assets/**/Thumbs.db*
 /git対象外
 /**/~$*
-/Assets/Plugins
+/Assets/Plugins/Moments Recorder*
 /ProjectSettings
 /Logs/Packages-Update.log
 /Assets/Plugins.meta

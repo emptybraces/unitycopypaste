@@ -2,9 +2,9 @@
 
 public class Test : MonoBehaviour
 {
-	[SerializeField] AssetRef assetRef1;
-	[SerializeField] AssetRef assetRef2;
-	[SerializeField] AssetRef assetRef3;
+	[SerializeField] Serializable.AssetRef assetRef1;
+	[SerializeField] Serializable.AssetRef assetRef2;
+	[SerializeField] Serializable.AssetRef assetRef3;
 
 	void Start()
 	{

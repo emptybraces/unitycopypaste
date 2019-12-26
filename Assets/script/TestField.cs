@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestField : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class TestField : MonoBehaviour
 	[SerializeField] Serializable.TogglyBool togglyBool;
 	[SerializeField] Serializable.TogglyFloat togglyFloat;
 	[SerializeField] Serializable.TogglyVector3 togglyVector3;
-
+	[SerializeField, Utils.Name("攻撃力")] float power;
+	[SerializeField, Utils.Name("攻撃力", "防御力", "体力")] float[] powers;
 	void Start()
 	{
 		var audio_clip = GetComponent<AudioSource>();

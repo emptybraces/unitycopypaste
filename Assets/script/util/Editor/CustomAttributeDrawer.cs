@@ -54,7 +54,7 @@ namespace Utils
 				var num = int.Parse(System.Text.RegularExpressions.Regex.Replace(label.text, @"[^0-9]", ""));
 				if (num < Attribute.Names.Length)
 					name = Attribute.Names[num];
-				else
+				else 
 					name = label.text;
 			}
 			using (new EditorGUI.PropertyScope(position, label, property))
@@ -65,7 +65,7 @@ namespace Utils
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 		{
-			return EditorGUI.GetPropertyHeight(property, label, 0 < Attribute.Names.Length);
+			return EditorGUI.GetPropertyHeight(property, label, Attribute.Names != null);
 		}
 	}
 	[CustomPropertyDrawer(typeof(EnumMaskAttribute))]

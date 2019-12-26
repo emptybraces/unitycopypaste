@@ -241,6 +241,7 @@ namespace Utils
 			public bool Running => 0 < last.Count;
 			public void Stop()
 			{
+				Instance.RunningCount -= last.Count;
 				foreach (var i in last)
 					if (i != null)
 						Instance.StopCoroutine(i);

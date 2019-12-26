@@ -1,0 +1,6 @@
+﻿アイテムリスト,,,,,
+#skip#,lid,category,atk ,def,price
+,swordA,weapon,10,2.5,30
+,shieldB,weapon,6.5,4,30
+,shieldA,armor,0,5,20
+,shieldB,armor,0,10,40

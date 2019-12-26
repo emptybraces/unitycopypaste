@@ -238,7 +238,7 @@ public static class Extensions
 	{
 		return String.Join(SEPARATOR, new[] { obj.ToStringFields(flags), obj.ToStringProperties(flags) });
 	}
-	static string ToStringEx(this object obj)
+	public static string ToStringEx(this object obj)
 	{
 		if (!(obj is string)) {
 			var e = obj as IEnumerable;

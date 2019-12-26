@@ -168,6 +168,12 @@ MonoBehaviour:
   togglyVector3:
     enabled: 1
     value: {x: 3.07, y: -1.56, z: -5.47}
+  power: 0.48
+  powers:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!4 &403358550
 Transform:
   m_ObjectHideFlags: 0

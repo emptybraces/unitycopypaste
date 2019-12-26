@@ -23,6 +23,7 @@ namespace Utils
 		}
 		public static void Chain(Cancelator c, params IEnumerator[] actions)
 		{
+			c.Interrupt = false;
 			c.parent.Add(Instance.StartCoroutine(ChainLocal(c, actions)));
 		}
 		static IEnumerator ChainLocal(params IEnumerator[] actions)
@@ -237,7 +238,7 @@ namespace Utils
 			public List<UnityEngine.Coroutine> last = new List<UnityEngine.Coroutine>();
 			public override bool keepWaiting => Running;
 			public bool Interrupt { get; set; }
-			public bool Running => last != null;
+			public bool Running => 0 < last.Count;
 			public void Stop()
 			{
 				foreach (var i in last)

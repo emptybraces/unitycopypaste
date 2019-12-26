@@ -17,7 +17,7 @@ namespace Serializable
 #if UNITY_EDITOR
 			return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(assetPath);
 #else
-
+			return null;
 #endif
 		}
 	}

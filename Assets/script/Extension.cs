@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System;
+using System.Collections;
 
 public static class Extensions
 {
@@ -195,23 +196,25 @@ public static class Extensions
 
 	#region Object
 
-	const string SEPARATOR = ","; // 区切り記号として使用する文字列
-	const string FORMAT = "{0}:{1}"; // 複合書式指定文字列
+	const string SEPARATOR = ","; 
+	const string FORMAT = "{0}={1}"; 
+	const string FORMAT_NEST = "\t{0}:{1}\n";
+	const string FORMAT_NEST2 = "{0}:{1}\n";
 
 	/// <summary>
 	/// すべての公開フィールドの情報を文字列にして返します
 	/// </summary>
 	public static string ToStringFields<T>(this T obj, BindingFlags flags = 0)
 	{
-		return typeof(T) + " fields are: " + String.Join(SEPARATOR, obj
+		return String.Join(SEPARATOR, obj
 			.GetType()
 			.GetFields(BindingFlags.Instance | BindingFlags.Public | flags)
 			.Select(c =>
 			{
 				var o = c.GetValue(obj);
-				return String.Format(FORMAT, c.Name, o);
+				return String.Format(FORMAT, c.Name, o.ToStringEx());
 			})
-			.ToArray());
+			);
 	}
 
 	/// <summary>
@@ -219,23 +222,14 @@ public static class Extensions
 	/// </summary>
 	public static string ToStringProperties<T>(this T obj, BindingFlags flags = 0)
 	{
-		return typeof(T) + " props are: " + String.Join(SEPARATOR, obj
+		return String.Join(SEPARATOR, obj
 			.GetType()
 			.GetProperties(BindingFlags.Instance | BindingFlags.Public | flags)
 			.Where(c => c.CanRead)
-			.Select(c => String.Format(FORMAT, c.Name, c.GetValue(obj, null)))
-			.ToArray());
+			.Select(c => String.Format(FORMAT, c.Name, c.GetValue(obj, null).ToStringEx()))
+			);
 	}
 
-	// public static string ToStringMembers<T>(this T obj)
-	// {
-	// 	return String.Join(SEPARATOR, obj
-	// 		.GetType()
-	// 		.GetProperties(BindingFlags.Instance | BindingFlags.Public | )
-	// 		.Where(c => c.CanRead)
-	// 		.Select(c => String.Format(FORMAT, c.Name, c.GetValue(obj, null)))
-	// 		.ToArray());		
-	// }
 
 	/// <summary>
 	/// すべての公開フィールドと公開プロパティの情報を文字列にして返します
@@ -244,18 +238,30 @@ public static class Extensions
 	{
 		return String.Join(SEPARATOR, new[] { obj.ToStringFields(flags), obj.ToStringProperties(flags) });
 	}
+	static string ToStringEx(this object obj)
+	{
+		if (!(obj is string)) {
+			var e = obj as IEnumerable;
+			if (e != null) {
+				return "\n" + String.Join(SEPARATOR, e.Cast<object>()
+					.Select((elem, i) => String.Format(FORMAT_NEST2, "[" + i + "]", elem.ToStringEx()))
+					.ToArray());
+			}
+		}
+		return obj?.ToString() ?? "null";
+	}
 
 	public static string ToStringEnumerable<T>(this IEnumerable<T> source, string separator = SEPARATOR)
 	{
-		return source + ":\n" + String.Join(separator, source
-				   .Select((e, i) => "\t" + String.Format(FORMAT, "[" + i + "]", e.ToString()) + "\n")
+		return String.Join(separator, source
+				   .Select((e, i) => String.Format(FORMAT_NEST, "[" + i + "]", e.ToString()))
 				   .ToArray());
 	}
 
-	public static string ToStringKVPEnumerable<T, U>(this IEnumerable<KeyValuePair<T, U>> source, string separator = SEPARATOR)
+	public static string ToStringEnumerable<T, U>(this IEnumerable<KeyValuePair<T, U>> source, string separator = SEPARATOR)
 	{
-		return source + ":\n" + String.Join(separator, source
-				   .Select((e) => "\t" + String.Format(FORMAT, "[" + e.Key + "]", e.Value.ToString()) + "\n")
+		return String.Join(separator, source
+				   .Select((e) => String.Format(FORMAT_NEST, "[" + e.Key + "]", e.Value.ToString()))
 				   .ToArray());
 	}
 
@@ -371,12 +377,12 @@ public static class Extensions
 		return enumerable.OrderBy(e => UnityEngine.Random.value);
 	}
 
-	public static IEnumerable<T> EnumerableCreate<T>(int count) where T : new()
+	public static IEnumerable<T> EnumerableRepeat<T>(int count) where T : new()
 	{
-		return EnumerableCreate(count, () => new T());
+		return EnumerableRepeatEx(count, () => new T());
 	}
 
-	public static IEnumerable<T> EnumerableCreate<T>(int count, Func<T> creator)
+	public static IEnumerable<T> EnumerableRepeatEx<T>(int count, Func<T> creator)
 	{
 		for (int i = 0; i < count; i++)
 		{

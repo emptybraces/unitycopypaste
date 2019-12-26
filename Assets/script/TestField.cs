@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Test : MonoBehaviour
+public class TestField : MonoBehaviour
 {
 	[SerializeField] Serializable.AssetRef assetRef1;
 	[SerializeField] Serializable.AssetRef assetRef2;

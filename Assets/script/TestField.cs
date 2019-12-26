@@ -5,6 +5,9 @@ public class TestField : MonoBehaviour
 	[SerializeField] Serializable.AssetRef assetRef1;
 	[SerializeField] Serializable.AssetRef assetRef2;
 	[SerializeField] Serializable.AssetRef assetRef3;
+	[SerializeField] Serializable.TogglyBool togglyBool;
+	[SerializeField] Serializable.TogglyFloat togglyFloat;
+	[SerializeField] Serializable.TogglyVector3 togglyVector3;
 
 	void Start()
 	{

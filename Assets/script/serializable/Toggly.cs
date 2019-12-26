@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace Utils
+namespace Serializable
 {
 	[System.Serializable]
 	public abstract class DrawableToggly { }
@@ -28,45 +28,45 @@ namespace Utils
 	[System.Serializable]
 	public class TogglyInt : DrawableToggly
 	{
+		public bool enabled;
+		public int value;
 		public TogglyInt(int value)
 		{
 			enabled = true;
 			this.value = value;
 		}
-		public bool enabled;
-		public int value;
 	}
 	[System.Serializable]
 	public class TogglyString : DrawableToggly
 	{
+		public bool enabled;
+		public string value;
 		public TogglyString(string value)
 		{
 			enabled = true;
 			this.value = value;
 		}
-		public bool enabled;
-		public string value;
 	}
 	[System.Serializable]
 	public class TogglyColor : DrawableToggly
 	{
+		public bool enabled;
+		public Color value;
 		public TogglyColor(Color value)
 		{
 			enabled = true;
 			this.value = value;
 		}
-		public bool enabled;
-		public Color value;
 	}
 	[System.Serializable]
 	public class TogglyVector3 : DrawableToggly
 	{
+		public bool enabled;
+		public Vector3 value;
 		public TogglyVector3(Vector3 value)
 		{
 			enabled = true;
 			this.value = value;
 		}
-		public bool enabled;
-		public Vector3 value;
 	}
 }
